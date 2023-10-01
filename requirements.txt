@@ -1,0 +1,6 @@
+opentelemetry-instrumentation-fastapi
+opentelemetry-exporter-jaeger
+opentelemetry-exporter-otlp
+json_logging
+starlette
+fastapi
