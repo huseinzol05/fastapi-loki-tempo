@@ -15,6 +15,7 @@ from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from fastapi_loki_tempo.os_env import *
 from typing import Optional
 
+
 logger = logging.getLogger()
 logger.setLevel(LOGLEVEL)
 logging.getLogger('uvicorn.error').propagate = False
@@ -72,10 +73,28 @@ def patch(
     app,
     service_name: str = SERVICE_NAME,
     otlp_endpoint: Optional[str] = OTLP_ENDPOINT,
-    tracing_sample: Optional[float] = TRACING_SAMPLE,
     jaeger_host: Optional[str] = JAEGER_HOST,
     jaeger_port: Optional[int] = JAEGER_PORT,
+    tracing_sample: Optional[float] = TRACING_SAMPLE,
 ):
+    """
+    Add OpenTelemetry tracing for FastAPI app.
+
+    Parameters
+    ----------
+    app: fastapi.FastAPI object
+    service_name: str, optional (default=os.environ.get('SERVICE_NAME', 'fastapi'))
+        service name for tracing.
+    otlp_endpoint: Optional[str], optional (default=os.environ.get('OTLP_ENDPOINT', None))
+        if not None, will add OTLP exporter for tracing.
+    jaeger_host: Optional[str], optional (default=os.environ.get('JAEGER_HOST', None))
+        if not None, will add Jaeger exporter for tracing.
+    jaeger_port: Optional[int], optional (default=int(os.environ.get('JAEGER_PORT', 6831)))
+        Jaeger port for `jaeger_host`.
+    tracing_sample: Optional[float], optional (default=float(os.environ.get('TRACING_SAMPLE', 1.0)))
+        Read more at https://opentelemetry.io/docs/concepts/sampling/
+    """
+
     if not 0 < tracing_sample <= 1:
         raise ValueError('`tracing_sample` must, 0 < `tracing_sample` <= 1')
 

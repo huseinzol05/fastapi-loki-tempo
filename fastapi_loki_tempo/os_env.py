@@ -1,5 +1,4 @@
 import os
-from fastapi_loki_tempo.function import str2bool
 
 SERVICE_NAME = os.environ.get('SERVICE_NAME', 'fastapi')
 
