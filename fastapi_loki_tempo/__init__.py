@@ -98,9 +98,6 @@ def patch(
     if not 0 < tracing_sample <= 1:
         raise ValueError('`tracing_sample` must, 0 < `tracing_sample` <= 1')
 
-    if otlp_endpoint is None and jaeger_host is None:
-        raise ValueError('must set `otlp_endpoint` or `jaeger_host`.')
-
     if otlp_endpoint and jaeger_host:
         raise ValueError('cannot set `otlp_endpoint` and `jaeger_host` at the same time.')
 
