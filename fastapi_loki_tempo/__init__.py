@@ -138,6 +138,4 @@ def patch(
         @app.get(scalar_doc_endpoint, include_in_schema=False, response_class=HTMLResponse)
         async def scalar(request: Request = None):
 
-            openapi_url = str(request.url).replace('/scalar', '/openapi.json')
-
-            return html.replace('{{openapi_url}}', openapi_url)
+            return html.replace('{{openapi_url}}', app.openapi_url)
