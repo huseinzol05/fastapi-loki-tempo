@@ -1,4 +1,4 @@
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 
 import os
 import logging
@@ -13,6 +13,8 @@ from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from fastapi_loki_tempo.os_env import *
+from fastapi_loki_tempo.scalar import html
+from fastapi.responses import HTMLResponse
 from typing import Optional
 
 
@@ -76,6 +78,8 @@ def patch(
     jaeger_host: Optional[str] = JAEGER_HOST,
     jaeger_port: Optional[int] = JAEGER_PORT,
     tracing_sample: Optional[float] = TRACING_SAMPLE,
+    enable_scalar_doc: Optional[bool] = ENABLE_SCALAR_DOC,
+    scalar_doc_endpoint: Optional[str] = SCALAR_DOC_ENDPOINT
 ):
     """
     Add OpenTelemetry tracing for FastAPI app.
@@ -128,3 +132,12 @@ def patch(
         logger.info({'message': f'Enable Jaeger at {jaeger_host}:{jaeger_port}'})
 
     FastAPIInstrumentor.instrument_app(app)
+
+    if enable_scalar_doc:
+
+        @app.get(scalar_doc_endpoint, include_in_schema=False, response_class=HTMLResponse)
+        async def scalar(request: Request = None):
+
+            openapi_url = str(request.url).replace('/scalar', '/openapi.json')
+
+            return html.replace('{{openapi_url}}', openapi_url)

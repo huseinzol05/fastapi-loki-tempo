@@ -22,7 +22,7 @@ pip3 install git+https://github.com/huseinzol05/fastapi-loki-tempo
 
 ## how to
 
-Simple,
+Simple as,
 
 ```python
 import fastapi_loki_tempo
@@ -58,6 +58,12 @@ def patch(
     tracing_sample: Optional[float], optional (default=float(os.environ.get('TRACING_SAMPLE', 1.0)))
         Read more at https://opentelemetry.io/docs/concepts/sampling/
     """
+```
+
+Run FastAPI,
+
+```bash
+uvicorn app:app --reload --host 0.0.0.0 --port 7070
 ```
 
 ## Example
