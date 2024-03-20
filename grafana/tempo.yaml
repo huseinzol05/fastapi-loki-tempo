@@ -37,7 +37,6 @@ storage:
     backend: local # backend configuration to use
     block:
       bloom_filter_false_positive: .05 # bloom filter false positive rate.  lower values create larger filters but fewer false positives
-      version: vParquet
     wal:
       path: /tmp/tempo/wal # where to store the the wal locally
     local:
