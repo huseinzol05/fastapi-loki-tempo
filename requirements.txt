@@ -4,3 +4,4 @@ opentelemetry-exporter-otlp
 json_logging
 starlette
 fastapi
+prometheus-fastapi-instrumentator

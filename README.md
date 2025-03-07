@@ -40,6 +40,9 @@ def patch(
     jaeger_host: Optional[str] = JAEGER_HOST,
     jaeger_port: Optional[int] = JAEGER_PORT,
     tracing_sample: Optional[float] = TRACING_SAMPLE,
+    enable_prometheus_metrics = Optional[float] = ENABLE_PROMETHEUS_METRICS,
+    enable_scalar_doc: Optional[bool] = ENABLE_SCALAR_DOC,
+    scalar_doc_endpoint: Optional[str] = SCALAR_DOC_ENDPOINT
 ):
     """
     Add OpenTelemetry tracing for FastAPI app.
@@ -57,6 +60,8 @@ def patch(
         Jaeger port for `jaeger_host`.
     tracing_sample: Optional[float], optional (default=float(os.environ.get('TRACING_SAMPLE', 1.0)))
         Read more at https://opentelemetry.io/docs/concepts/sampling/
+    enable_prometheus_metrics: Optional[float], optional (default=float(os.environ.get('TRACING_SAMPLE', 1.0)))
+        Enable Prometheus metrics using https://github.com/trallnag/prometheus-fastapi-instrumentator
     """
 ```
 

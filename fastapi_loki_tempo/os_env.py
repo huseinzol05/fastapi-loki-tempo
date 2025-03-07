@@ -11,5 +11,7 @@ TRACING_SAMPLE = float(os.environ.get('TRACING_SAMPLE', 1.0))
 
 LOGLEVEL = os.environ.get('LOGLEVEL', 'INFO').upper()
 
+ENABLE_PROMETHEUS_METRICS = os.environ.get('ENABLE_PROMETHEUS_METRICS', 'true').lower() == 'true'
+
 ENABLE_SCALAR_DOC = os.environ.get('ENABLE_SCALAR_DOC', 'true').lower() == 'true'
 SCALAR_DOC_ENDPOINT = os.environ.get('SCALAR_DOC_ENDPOINT', '/scalar')

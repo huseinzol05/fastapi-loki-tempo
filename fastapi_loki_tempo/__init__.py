@@ -1,4 +1,4 @@
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 
 import os
 import logging
@@ -12,6 +12,7 @@ from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+from prometheus_fastapi_instrumentator import Instrumentator
 from fastapi_loki_tempo.os_env import *
 from fastapi_loki_tempo.scalar import html
 from fastapi.responses import HTMLResponse
@@ -78,6 +79,7 @@ def patch(
     jaeger_host: Optional[str] = JAEGER_HOST,
     jaeger_port: Optional[int] = JAEGER_PORT,
     tracing_sample: Optional[float] = TRACING_SAMPLE,
+    enable_prometheus_metrics: Optional[float] = ENABLE_PROMETHEUS_METRICS,
     enable_scalar_doc: Optional[bool] = ENABLE_SCALAR_DOC,
     scalar_doc_endpoint: Optional[str] = SCALAR_DOC_ENDPOINT
 ):
@@ -97,6 +99,8 @@ def patch(
         Jaeger port for `jaeger_host`.
     tracing_sample: Optional[float], optional (default=float(os.environ.get('TRACING_SAMPLE', 1.0)))
         Read more at https://opentelemetry.io/docs/concepts/sampling/
+    enable_prometheus_metrics: Optional[float], optional (default=float(os.environ.get('TRACING_SAMPLE', 1.0)))
+        Enable Prometheus metrics using https://github.com/trallnag/prometheus-fastapi-instrumentator
     """
 
     if not 0 < tracing_sample <= 1:
@@ -132,6 +136,7 @@ def patch(
         logger.info({'message': f'Enable Jaeger at {jaeger_host}:{jaeger_port}'})
 
     FastAPIInstrumentor.instrument_app(app)
+    Instrumentator().instrument(app).expose(app)
 
     if enable_scalar_doc:
 
