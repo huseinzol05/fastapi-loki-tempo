@@ -1,5 +1,4 @@
 import setuptools
-import fastapi_loki_tempo
 
 __packagename__ = 'fastapi-loki-tempo'
 
