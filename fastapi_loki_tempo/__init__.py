@@ -99,7 +99,7 @@ def patch(
         Jaeger port for `jaeger_host`.
     tracing_sample: Optional[float], optional (default=float(os.environ.get('TRACING_SAMPLE', 1.0)))
         Read more at https://opentelemetry.io/docs/concepts/sampling/
-    enable_prometheus_metrics: Optional[float], optional (default=float(os.environ.get('TRACING_SAMPLE', 1.0)))
+    enable_prometheus_metrics: Optional[bool], optional (default=os.environ.get('ENABLE_PROMETHEUS_METRICS', 'true').lower() == 'true')
         Enable Prometheus metrics using https://github.com/trallnag/prometheus-fastapi-instrumentator
     """
 
